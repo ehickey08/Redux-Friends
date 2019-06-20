@@ -1,7 +1,9 @@
 import {combineReducers} from "redux"
 
-import {testing} from "./test"
+import {friendManagement} from "./friendManagement"
+import {login} from "./login"
 
-export const combineReducers({
-    testing
+export default combineReducers({
+    login,
+    friendManagement
 })
