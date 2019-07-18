@@ -1,0 +1,23 @@
+.App-container h1{
+  text-align: center;
+}
+
+.App-container nav{
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    margin: 25px auto;
+    width: 200px;
+}
+.login-form {
+    max-width: 300px;
+    margin: 100px auto;
+}
+
+.login-form-forgot {
+    float: right;
+}
+
+.login-form-button {
+    width: 100%;
+}
