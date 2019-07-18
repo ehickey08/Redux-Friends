@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react'
 import Friend from '../components/Friend'
 import FriendForm from '../components/FriendForm'
 import {useAxios, setAxiosAuthConfig} from 'useful-react-hooks'
-
+import styled from 'styled-components'
 let token = localStorage.getItem('token')
 
 if(token)
     setAxiosAuthConfig({baseURL:`http://localhost:5000/api`, timeout: 2000, headers:{ Authorization: token.substring(1, token.length-1)} })
 
 function FriendList (props) {
+    const [isShowing, setIsShowing] = useState(false);
     const [editFriendInfo, setEditFriendInfo] = useState({name: '', age: '', email: '', id: ''});
     const [request, value, error, isLoading] = useAxios()
     
@@ -19,6 +20,16 @@ function FriendList (props) {
     useEffect(() => {
         getFriends()
     }, []);
+
+    useEffect(() => {
+        if(isLoading)
+            setTimeout((isLoading) => {
+                if(isLoading)
+                    setIsShowing(true)
+            }, 50)
+        else
+            setIsShowing(false)
+    }, [isLoading])
 
     const updateForm = friend => {
         setEditFriendInfo(friend)
@@ -41,7 +52,7 @@ function FriendList (props) {
     return (
         <div className ="friend_list">
             <FriendForm editFriend = {editFriend} addFriend={addFriend} editFriendInfo={editFriendInfo}/>
-            {isLoading && <h2>Fetching Friends</h2>}
+            {isShowing && <FetchCont>Fetching Friends</FetchCont>}
             {value && value.map(friend => 
                     <Friend 
                     key={friend.id}
@@ -56,3 +67,7 @@ function FriendList (props) {
 }
 
 export default FriendList
+
+const FetchCont = styled.h2`
+    text-align: center;
+`

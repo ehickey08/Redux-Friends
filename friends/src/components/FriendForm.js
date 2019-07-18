@@ -2,11 +2,12 @@ import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 
 function FriendForm (props) {
-    const [isEditing, setIsEditing] = useState(true);
+    const [isEditing, setIsEditing] = useState(false);
     const [friend, setFriend] = useState({name: '', age: '', email: ''});
 
     useEffect(() => {
-        setIsEditing(isEditing => !isEditing)
+        if(props.editFriendInfo)
+            setIsEditing(true)
         setFriend(props.editFriendInfo)
     }, [props.editFriendInfo]);
 
@@ -16,8 +17,10 @@ function FriendForm (props) {
     return (
         <FormDiv onSubmit = {(event) => {
             event.preventDefault();
-            if(isEditing) 
+            if(isEditing) {
                 props.editFriend(friend)
+                setIsEditing(false)
+            }
             else 
                 props.addFriend(friend)
             setFriend({name: '', age: '', email: ''})
