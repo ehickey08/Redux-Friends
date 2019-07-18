@@ -1,32 +1,32 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {Route, NavLink, Redirect} from 'react-router-dom'
-import {connect} from 'react-redux'
-import FriendList from "./views (containers)/FriendList"
-import Login from "./views (containers)/Login"
-import {logout} from './actions'
+import FriendList from "./views/FriendList"
+import Login from "./views/Login"
 import './App.css';
 
-class App extends Component {
-    logout = (log) => {
-        if(log === 'Logout'){
-            this.props.logout(log)
-            localStorage.setItem("token", '')
-        }
-    }
-    render(){
-        const log = this.props.loggedIn ? "Logout" : "Login";
-        return (
-            <div className="App-container">
-                <nav>
-                    <NavLink to="/login" onClick ={() => this.logout(log)}>{log}</NavLink>
-                    <NavLink to="/friends">MyFriends</NavLink>
-                </nav>
-                <h1>Store, Add, Update, and Delete Your Friends!</h1> 
-                <Route path = "/login" component={Login} />
-                <PrivateRoute path = "/friends" component={FriendList} />
-            </div>
-        );
-    }
+function App () {
+    // const [loggedIn, setLoggedIn] = useState('LogIn');
+    
+    // const log = this.props.loggedIn ? "Logout" : "Login";
+    
+    // const logout = (log) => {
+    //     if(log === 'Logout'){
+    //         this.props.logout(log)
+    //         localStorage.setItem("token", '')
+    //     }
+    // }
+    
+    return (
+        <div className="App-container">
+            <nav>
+                <NavLink to="/login">Login</NavLink>
+                <NavLink to="/friends">MyFriends</NavLink>
+            </nav>
+            <h1>Store, Add, Update, and Delete Your Friends!</h1> 
+            <Route path = "/login" component={Login} />
+            <PrivateRoute path = "/friends" component={FriendList} />
+        </div>
+    )
 }
 
 const PrivateRoute = ({component: Component, ...rest}) => {
@@ -35,12 +35,4 @@ const PrivateRoute = ({component: Component, ...rest}) => {
     } />
 }
 
-const mapStateToProps = (state) => ({
-    loggedIn: state.login.loggedIn
-})
-
-const mapDispatchToProps = {
-    logout
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

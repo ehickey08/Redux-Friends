@@ -1,9 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-
-
-
+import {useAxios} from 'useful-react-hooks'
 const Friend = props => {
+    const [request, values, error, isLoading] = useAxios()
     return (
         <FriendDiv>
             <div>
@@ -12,7 +11,7 @@ const Friend = props => {
                 <FriendSpan>Email: {props.friend.email}</FriendSpan>
             </div>
             <UpdateButton onClick = {() => props.updateForm(props.friend)}>Update</UpdateButton>
-            <DeleteButton onClick ={() => props.deleteFriend(props.friend.id)}>Delete</DeleteButton>
+            <DeleteButton onClick ={() => request.delete(`/friends/${props.friend.id}`, true)}>Delete</DeleteButton>
         </FriendDiv>
     )
 }

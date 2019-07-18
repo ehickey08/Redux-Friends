@@ -1,27 +1,22 @@
 //dependency imports
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Provider} from 'react-redux'
 import {BrowserRouter as Router} from "react-router-dom"
-import thunk from "redux-thunk"
-import {createStore, applyMiddleware} from "redux"
-
+import {setAxiosDefaultConfig} from 'useful-react-hooks'
 //styling
 import './index.css';
 import 'antd/dist/antd.css';
 
 //components
 import App from './App';
-import rootReducer from "./reducers"
 
-const store = createStore(rootReducer, applyMiddleware(thunk))
+setAxiosDefaultConfig({baseURL: "http://localhost:5000/api", timeout: 1000})
 
 ReactDOM.render(
-    <Provider store = {store}>
         <Router>
             <App />        
-        </Router>
-    </Provider>,
+        </Router>,
     document.getElementById('root')
 );
+
 

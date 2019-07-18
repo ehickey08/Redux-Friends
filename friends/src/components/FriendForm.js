@@ -1,34 +1,47 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import {useAxios} from 'useful-react-hooks'
 import styled from 'styled-components'
 
-const FriendForm = props => {
+function FriendForm (props) {
+    const [isEditing, setIsEditing] = useState(false);
+    const [friend, setFriend] = useState({name: '', age: '', email: ''});
+    const [request, value, error, isLoading] = useAxios()
+
+    useEffect(() => {
+        setIsEditing(true)
+    }, [props.editFriend]);
+
+    const changeHandler = (e) => {
+        setFriend({...friend, [e.target.name]: e.target.value})
+    }
     return (
         <FormDiv onSubmit = {(event) => {
             event.preventDefault();
-            if(props.friends.find(friend => friend.id ===props.friend.id)) 
-                props.updateFriend(props.friend)
+            if(isEditing) 
+                request.put(`/friends/${props.editFriend.id}`, friend, true)
             else 
-                props.postFriend(props.friend)
+                request.post(`/friends`, friend, true)
+                
         }}>
             <input
                 type="text"
                 name="name" 
-                onChange = {(evt) => props.handler(evt)}
-                value = {props.friend.name}
+                onChange = {changeHandler}
+                value = {friend.name}
                 placeholder = "Name"
             />
             <input 
                 type="text"
                 name="age" 
-                onChange = {(evt) => props.handler(evt)}
-                value = {props.friend.age}
+                onChange = {changeHandler}
+                value = {friend.age}
                 placeholder = "Age"
             />
             <input
                 type="text" 
                 name="email" 
-                onChange = {(evt) => props.handler(evt)}
-                value = {props.friend.email}
+                onChange = {changeHandler}
+                value = {friend.email}
                 placeholder = "Email"
             />
             <input 
