@@ -11,7 +11,7 @@ const Friend = props => {
                 <FriendSpan>Email: {props.friend.email}</FriendSpan>
             </div>
             <UpdateButton onClick = {() => props.updateForm(props.friend)}>Update</UpdateButton>
-            <DeleteButton onClick ={() => request.delete(`/friends/${props.friend.id}`, true)}>Delete</DeleteButton>
+            <DeleteButton onClick ={() => props.removeFriend(props.friend.id)}>Delete</DeleteButton>
         </FriendDiv>
     )
 }

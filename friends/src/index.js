@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter as Router} from "react-router-dom"
-import {setAxiosDefaultConfig} from 'useful-react-hooks'
+import {setAxiosDefaultConfig, setAxiosAuthConfig} from 'useful-react-hooks'
 //styling
 import './index.css';
 import 'antd/dist/antd.css';

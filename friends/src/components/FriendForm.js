@@ -1,15 +1,14 @@
 import React, {useState, useEffect} from 'react'
-import {useAxios} from 'useful-react-hooks'
 import styled from 'styled-components'
 
 function FriendForm (props) {
-    const [isEditing, setIsEditing] = useState(false);
+    const [isEditing, setIsEditing] = useState(true);
     const [friend, setFriend] = useState({name: '', age: '', email: ''});
-    const [request, value, error, isLoading] = useAxios()
 
     useEffect(() => {
-        setIsEditing(true)
-    }, [props.editFriend]);
+        setIsEditing(isEditing => !isEditing)
+        setFriend(props.editFriendInfo)
+    }, [props.editFriendInfo]);
 
     const changeHandler = (e) => {
         setFriend({...friend, [e.target.name]: e.target.value})
@@ -18,9 +17,10 @@ function FriendForm (props) {
         <FormDiv onSubmit = {(event) => {
             event.preventDefault();
             if(isEditing) 
-                request.put(`/friends/${props.editFriend.id}`, friend, true)
+                props.editFriend(friend)
             else 
-                request.post(`/friends`, friend, true)
+                props.addFriend(friend)
+            setFriend({name: '', age: '', email: ''})
                 
         }}>
             <input

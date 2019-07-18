@@ -15,9 +15,8 @@ function NormalLoginForm (props) {
 
     useEffect(() => {
         if(value){
-            setToken(value)
-            setAxiosAuthConfig({baseURL:`http://localhost:5000/api`, timeout: 1000, headers:{ Authorization: token} })
-            props.history.push('/friends')
+            setToken(value.payload)
+            setAxiosAuthConfig({baseURL:`http://localhost:5000/api`, timeout: 2000, headers:{ Authorization: value.payload} })
         }
     }, [value]);
   
